@@ -3,7 +3,7 @@ import argparse
 import cv2, os
 
 from maskrcnn_benchmark.config import cfg
-from predictor import COCODemo
+from simpler_predictor import COCODemo
 
 import time
 
@@ -18,7 +18,7 @@ def main():
     )
     parser.add_argument(
         "--weights",
-        default="FCOS_R_50_FPN_1x.pth",
+        default="models/FCOS_R_50_FPN_1x.pth",
         metavar="FILE",
         help="path to the trained model",
     )
@@ -101,6 +101,7 @@ def main():
         composite = coco_demo.run_on_opencv_image(img)
         print("{}\tinference time: {:.2f}s".format(im_name, time.time() - start_time))
         cv2.imshow(im_name, composite)
+        cv2.imwrite('res_{}.png'.format(im_name), composite)
     print("Press any keys to exit ...")
     cv2.waitKey()
     cv2.destroyAllWindows()
